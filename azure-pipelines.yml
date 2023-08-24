@@ -1,0 +1,22 @@
+
+stages:          # List of stages for jobs, and their order of execution
+  - build
+  - test
+  - deploy
+default:
+  image: node:lts 
+before_script:
+  - npm install
+  - npm install -g gatsby-cli
+
+build_job:
+  stage: build
+  script: 
+    - gatsby build
+  artifacts:
+    paths:
+      - public
+test-job:
+  stage: test
+  script:
+    - cat ./public/index.html | grep Gatsby
